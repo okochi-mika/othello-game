@@ -1,0 +1,36 @@
+/* 盤面のスタイル */
+#board {
+    display: grid;
+    grid-template-columns: repeat(8, 50px);
+    grid-template-rows: repeat(8, 50px);
+    gap: 2px;
+    background-color: #333;
+    width: 414px;
+    margin: 20px auto;
+}
+/* マスのスタイル */
+.cell {
+    background-color: #008000; /* 緑色の盤面 */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+}
+/* 石のスタイル */
+.stone {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    display: none; /* 最初は非表示 */
+}
+.black { background-color: black; display: block; }
+.white { background-color: white; display: block; }
+
+/* タイトルのスタイル */
+h1 {
+    text-align: center;
+    font-family: 'Helvetica Neue', Arial, 'Hiragino Kaku Gothic ProN', 'Hiragino Sans', Meiryo, sans-serif;
+    font-size: 24px;
+    color: #333333;
+    letter-spacing: 2px;
+}
