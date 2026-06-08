@@ -10,7 +10,7 @@
 }
 /* マスのスタイル */
 .cell {
-    background-color: #008000; /* 緑色の盤面 */
+    background-color: #70e670; /* 緑色の盤面 */
     display: flex;
     justify-content: center;
     align-items: center;
@@ -23,8 +23,20 @@
     border-radius: 50%;
     display: none; /* 最初は非表示 */
 }
-.black { background-color: black; display: block; }
-.white { background-color: white; display: block; }
+
+.black { 
+    background-image: url('images/pikachu.png'); /* 黒の代わりに表示する画像ファイル名 */
+    background-size: cover;            /* マスの大きさに画像をピッタリ合わせる */
+    background-position: center;       /* 画像を中心におく */
+    display: block; 
+}
+
+.white { 
+    background-image: url('images/eevee.png'); /* 白の代わりに表示する画像ファイル名 */
+    background-size: cover; 
+    background-position: center;
+    display: block; 
+}
 
 /* タイトルのスタイル */
 h1 {

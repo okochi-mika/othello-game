@@ -7,7 +7,7 @@
 </head>
 <body>
 
-    <h1>次は: <span id="turn">黒</span>の番</h1>
+    <h1>次は: <span id="turn">ピカチュウ</span>の番</h1>
     
     <div id="board"></div>
 
@@ -96,7 +96,7 @@
                 isBlackTurn = !isBlackTurn;
                 
                 // 画面上の「〇〇の番」という文字を書き換える
-                turnText.textContent = isBlackTurn ? '黒' : '白';
+                turnText.textContent = isBlackTurn ? 'ピカチュウ' : 'イーブイ';
                 
                 // 盤面のデータが変わったので、画面を新しく描き直す
                 drawBoard();
