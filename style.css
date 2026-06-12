@@ -1,23 +1,23 @@
 /* 盤面のスタイル */
 #board {
     display: grid;
-    /* 50px固定から ➡️ 1個あたり「全体の8分の1（1fr）」という指定に変えます */
-    grid-template-columns: repeat(8, 1fr);
-    grid-template-rows: repeat(8, 1fr);
-    gap: 0; 
-    border: 1px solid black; 
+    grid-template-columns: repeat(8, 50px);
+    grid-template-rows: repeat(8, 50px);
+    gap: 0;
+    
+    /* 👇 【大本命】オセロ盤のまわりに太い木の「縁（ふち）」をつける */
+    border: 12px solid #a0c49d; /* ポケモンの世界観に合う優しい緑（または茶色 #8B5A2B もおすすめ）*/
+    border-radius: 10px;         /* 縁の角をほんのり丸くする */
+    
+    /* 👇 背景とオセロ盤をハッキリ切り離すために、盤の後ろに「影」を落とす */
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+    
     background-color: #333;
-    
-    /* 👇 ここで全体のサイズを決めます */
-    width: 90%;       /* 画面の横幅の90%の大きさにします（スマホでもはみ出さない） */
-    max-width: 400px; /* ただし、パソコンなどの大きな画面では最大400pxでストップさせます */
-    
-    /* 👇 正方形を保つための魔法の1行 */
-    aspect-ratio: 1 / 1; 
-    
+    width: 400px;
     margin: 20px auto;
 }
 
+/* ボードの位置を中央に寄せる */
 body {
     /* 👇 画面の「縦幅いっぱい」を基準にするという魔法の指定 */
     min-height: 100vh; 
@@ -30,11 +30,17 @@ body {
     
     margin: 0;                /* 画面全体の余計な隙間をゼロにする */
     background-color: #f5f5f5; /* 背景を少し優しいグレーに（お好みで） */
+
+    /* 👇 【ここを追加！】背景画像の設定 */
+    background-image: url('images/haikei.png'); /* 画像の場所を指定 */
+    background-size: cover;                    /* 画面いっぱいに隙間なく画像を広げる */
+    background-position: center;               /* 画像の中心が画面の真ん中に来るようにする */
+    background-repeat: no-repeat;              /* 画面が大きくても画像がタイル状に繰り返さないようにする */
 }
 
 /* マスのスタイル */
 .cell {
-    background-color: #55f055; /* スクショの綺麗な黄緑色に合わせています */
+    background-color: #f9fbf9; /* スクショの綺麗な黄緑色に合わせています */
     display: flex;
     justify-content: center;
     align-items: center;
@@ -69,8 +75,16 @@ body {
 /* タイトルのスタイル */
 h1 {
     text-align: center;
-    font-family: 'Helvetica Neue', Arial, 'Hiragino Kaku Gothic ProN', 'Hiragino Sans', Meiryo, sans-serif;
-    font-size: 24px;
-    color: #333333;
+    font-family: 'Helvetica Neue', Arial, sans-serif;
+    font-size: 26px;
+    font-weight: bold;
+    color: #1e3d59; /* 文字の色を少しおしゃれな濃いネイビーに */
     letter-spacing: 2px;
+
+    /* 👇 文字の後ろに丸みのある白い看板を敷く */
+    background-color: rgba(255, 255, 255, 0.9); /* 90%の濃い白 */
+    padding: 12px 30px;                         /* 看板の中の余白 */
+    border-radius: 50px;                        /* 完全に角を丸くしてカプセル型に */
+    box-shadow: 0 4px 10px rgba(0,0,0,0.15);    /* うっすら影をつけて浮き立たせる */
+    margin-bottom: 10px;
 }
