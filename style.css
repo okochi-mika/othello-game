@@ -1,20 +1,48 @@
 /* 盤面のスタイル */
 #board {
     display: grid;
-    grid-template-columns: repeat(8, 50px);
-    grid-template-rows: repeat(8, 50px);
-    gap: 2px;
+    /* 50px固定から ➡️ 1個あたり「全体の8分の1（1fr）」という指定に変えます */
+    grid-template-columns: repeat(8, 1fr);
+    grid-template-rows: repeat(8, 1fr);
+    gap: 0; 
+    border: 1px solid black; 
     background-color: #333;
-    width: 414px;
+    
+    /* 👇 ここで全体のサイズを決めます */
+    width: 90%;       /* 画面の横幅の90%の大きさにします（スマホでもはみ出さない） */
+    max-width: 400px; /* ただし、パソコンなどの大きな画面では最大400pxでストップさせます */
+    
+    /* 👇 正方形を保つための魔法の1行 */
+    aspect-ratio: 1 / 1; 
+    
     margin: 20px auto;
 }
+
+body {
+    /* 👇 画面の「縦幅いっぱい」を基準にするという魔法の指定 */
+    min-height: 100vh; 
+    
+    /* 👇 中身を上下左右のど真ん中に整列させる3点セット */
+    display: flex;
+    flex-direction: column;   /* タイトルと盤面を縦に並べる */
+    justify-content: center;  /* 上下方向の真ん中 */
+    align-items: center;      /* 左右方向の真ん中 */
+    
+    margin: 0;                /* 画面全体の余計な隙間をゼロにする */
+    background-color: #f5f5f5; /* 背景を少し優しいグレーに（お好みで） */
+}
+
 /* マスのスタイル */
 .cell {
-    background-color: #70e670; /* 緑色の盤面 */
+    background-color: #55f055; /* スクショの綺麗な黄緑色に合わせています */
     display: flex;
     justify-content: center;
     align-items: center;
     cursor: pointer;
+    border: 1px solid black; 
+    box-sizing: border-box; 
+    width: 100%;  /* マスの幅と高さを自動に */
+    height: 100%;
 }
 /* 石のスタイル */
 .stone {
@@ -32,7 +60,7 @@
 }
 
 .white { 
-    background-image: url('images/eevee.png'); /* 白の代わりに表示する画像ファイル名 */
+    background-image: url('images/metamon.png'); /* 白の代わりに表示する画像ファイル名 */
     background-size: cover; 
     background-position: center;
     display: block; 
