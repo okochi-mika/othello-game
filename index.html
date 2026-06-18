@@ -20,10 +20,8 @@
         // HTMLの要素（盤面とターンの文字）をプログラムで扱えるように取得
         const board = document.getElementById('board');
         const turnText = document.getElementById('turn');
+        let isBlackTurn = true; // trueならピカチュウ(黒)、falseならメタモン(白)
         
-        // 現在のターンを管理するフラグ（trueなら黒の番、falseなら白の番）
-        let isBlackTurn = true; 
-
         // 挟める石を探すための「8方向の進み方」を定義（[横の移動量, 縦の移動量]）
         const directions = [
             [-1, -1], [0, -1], [1, -1], // 左上、上、右上
@@ -72,6 +70,27 @@
         }
 
         /**
+         * 🌟【新しく追加した関数】
+         * 現在のプレイヤーが、盤面全体のどこかに1箇所でも「置ける場所があるか」を調べる関数
+         * @param {number} color - 調べたいプレイヤーの色（1か2）
+         * @returns {boolean} - 1箇所でも置ければtrue、どこにも置けなければfalse
+         */
+        function hasValidMoves(color) {
+            // 0から63までの全マスを順番にチェックする
+            for (let i = 0; i < 64; i++) {
+                // もしすでに石があるマスなら飛ばす
+                if (boardState[i] !== 0) continue;
+                
+                // 既存の「ひっくり返せる石を計算する関数」を使い、1つでもひっくり返せるか調べる
+                const stones = getStonesToFlip(i, color);
+                if (stones.length > 0) {
+                    return true; // 置ける場所を発見したら、その時点でtrueを返して終了
+                }
+            }
+            return false; // 64マス全て調べて、どこにも置けなければfalse
+        }
+
+        /**
          * マス目がクリックされた時に動くメインの処理
          * @param {number} index - クリックされたマスの番号（0〜63）
          */
@@ -100,6 +119,40 @@
                 
                 // 盤面のデータが変わったので、画面を新しく描き直す
                 drawBoard();
+
+                // ==========================================================
+                // 🌟【ここから自動パスのロジックを追加！】
+                // ==========================================================
+                
+                // 交代した次のプレイヤーの色を決定する（黒なら1、白なら2）
+                const nextColor = isBlackTurn ? 1 : 2;
+
+                // もし次のプレイヤーに、置ける場所が「1箇所もなかったら」
+                if (!hasValidMoves(nextColor)) {
+                    
+                    // 【ゲーム終了チェック】
+                    // 相手が置けない上で、さらに「自分（nextColorを反転させた本来の相手）」も置けない場合
+                    // つまり、お互いにどこにも置けない状態なら完全にゲーム終了
+                    const currentOpponentColor = nextColor === 1 ? 2 : 1;
+                    if (!hasValidMoves(currentOpponentColor)) {
+                        alert("お互いに置ける場所がなくなりました。ゲーム終了です！");
+                        return; // 処理を完全に終わらせる
+                    }
+
+                    // 【パスの処理】
+                    // 相手だけが置けない場合は、誰がパスになるか名前を決めてアラートを出す
+                    const passedPlayerName = isBlackTurn ? 'ピカチュウ' : 'メタモン';
+                    alert(`${passedPlayerName}の置ける場所がないため、パスします！`);
+                    
+                    // もう一度ターンをひっくり返して自分に戻す
+                    isBlackTurn = !isBlackTurn;
+                    
+                    // 画面の「〇〇の番」という表示を、自分（パスされなかった方）の名前に戻す
+                    turnText.textContent = isBlackTurn ? 'ピカチュウ' : 'メタモン';
+                }
+                // ==========================================================
+                // 🌟【自動パスのロジックここまで】
+                // ==========================================================
             }
         }
 
@@ -157,6 +210,6 @@
 
         // ゲーム起動時に、最初の1回目として盤面を描画する
         drawBoard();
-    </script>
+</script>
 </body>
 </html>
